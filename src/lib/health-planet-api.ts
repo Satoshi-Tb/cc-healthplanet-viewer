@@ -1,31 +1,22 @@
 import { HealthPlanetResponse, HealthData, ParsedHealthData } from '@/types';
 
-const BASE_URL = 'https://www.healthplanet.jp/status/innerscan.json';
-
 export class HealthPlanetAPI {
-  private accessToken: string;
-
-  constructor(accessToken: string) {
-    this.accessToken = accessToken;
-  }
-
   async fetchHealthData(
     from: string,
     to: string,
     tag?: string
   ): Promise<HealthData[]> {
     const params = new URLSearchParams({
-      access_token: this.accessToken,
-      date: '1',
       from,
       to,
       ...(tag && { tag }),
     });
 
-    const response = await fetch(`${BASE_URL}?${params}`);
+    const response = await fetch(`/api/health-data?${params}`);
     
     if (!response.ok) {
-      throw new Error(`Health Planet API error: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `API error: ${response.status}`);
     }
 
     const data: HealthPlanetResponse = await response.json();

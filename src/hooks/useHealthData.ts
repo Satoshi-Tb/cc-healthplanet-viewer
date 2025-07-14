@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { HealthPlanetAPI } from '@/lib/health-planet-api';
 import { ParsedHealthData, DateRangeFilter } from '@/types';
 
-const api = new HealthPlanetAPI(process.env.NEXT_PUBLIC_HEALTH_PLANET_ACCESS_TOKEN || '');
+const api = new HealthPlanetAPI();
 
 async function fetchHealthData(dateRange: DateRangeFilter): Promise<ParsedHealthData[]> {
   const fromDate = api.formatDateForAPI(dateRange.startDate);
