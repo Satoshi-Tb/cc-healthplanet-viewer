@@ -12,7 +12,13 @@ export class HealthPlanetAPI {
       ...(tag && { tag }),
     });
 
-    const response = await fetch(`/api/health-data?${params}`);
+    const response = await fetch('/api/health-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params,
+    });
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
