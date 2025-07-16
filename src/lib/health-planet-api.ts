@@ -26,10 +26,6 @@ export class HealthPlanetAPI {
     }
 
     const data: HealthPlanetResponse = await response.json();
-    
-    if (data.status !== 1) {
-      throw new Error('Health Planet API returned error status');
-    }
 
     return data.data;
   }
@@ -46,9 +42,9 @@ export class HealthPlanetAPI {
       }
 
       const entry = dataMap.get(date)!;
-      const value = parseFloat(item.model);
+      const value = parseFloat(item.keydata);
 
-      switch (item.keydata) {
+      switch (item.tag) {
         case '6021':
           entry.weight = value;
           break;

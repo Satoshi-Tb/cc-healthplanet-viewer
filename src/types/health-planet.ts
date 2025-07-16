@@ -24,7 +24,9 @@ export interface BMIData extends HealthData {
 export type HealthDataType = WeightData | BodyFatData | MuscleData | BMIData;
 
 export interface HealthPlanetResponse {
-  status: number;
+  birth_date: string;
+  height: string;
+  sex: string;
   data: HealthData[];
 }
 
