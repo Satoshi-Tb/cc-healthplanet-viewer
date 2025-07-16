@@ -12,14 +12,13 @@
 - **チャート**: Chart.js / Recharts
 - **スタイリング**: CSS Modules / Emotion (MUI標準)
 - **テスト**: Jest + React Testing Library + Playwright
+- **デプロイ**: Cloudflare Pages
 
 ## 機能要件
 
 ### データ表示
 - 体重
-- 体脂肪率  
-- BMI
-- 筋肉量
+- 体脂肪率
 
 ### 期間選択
 - 週次表示
@@ -130,6 +129,58 @@ npm run test:all
 # テストカバレッジ確認
 npm run test:coverage
 ```
+
+## デプロイ
+
+### Cloudflare Pages
+- **プラットフォーム**: Cloudflare Pages
+- **CI/CD**: GitHub Actions + Cloudflare Pages
+- **ドメイン**: カスタムドメイン対応
+- **SSL**: 自動SSL証明書
+- **CDN**: グローバルエッジネットワーク
+
+### デプロイコマンド
+```bash
+# 本番ビルド
+npm run build
+
+# 静的エクスポート
+npm run export
+
+# デプロイ（Cloudflare Pages）
+npm run deploy
+
+# プレビューデプロイ
+npm run deploy:preview
+```
+
+### 環境変数 (本番)
+```env
+# Cloudflare Pages環境変数
+HEALTH_PLANET_CLIENT_ID=your_production_client_id
+HEALTH_PLANET_CLIENT_SECRET=your_production_client_secret
+HEALTH_PLANET_ACCESS_TOKEN=your_production_access_token
+NEXT_PUBLIC_APP_ENV=production
+```
+
+### CI/CD パイプライン
+1. **GitHub Push** → `main`ブランチ
+2. **GitHub Actions** → テスト実行
+3. **Cloudflare Pages** → 自動ビルド・デプロイ
+4. **プレビュー** → PR毎に自動生成
+5. **本番反映** → マージ後自動デプロイ
+
+### デプロイ設定
+- **ビルドコマンド**: `npm run build`
+- **出力ディレクトリ**: `out`
+- **Node.js バージョン**: 18.x
+- **環境変数**: Cloudflare Pages設定画面で管理
+
+### セキュリティ
+- **HTTPS強制**: 自動リダイレクト
+- **セキュリティヘッダー**: 自動設定
+- **DDoS保護**: 標準装備
+- **WAF**: Web Application Firewall
 
 ## 今後の拡張予定
 - 目標設定機能
