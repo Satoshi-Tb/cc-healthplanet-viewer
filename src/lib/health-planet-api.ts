@@ -51,12 +51,6 @@ export class HealthPlanetAPI {
         case '6022':
           entry.bodyFat = value;
           break;
-        case '6023':
-          entry.muscle = value;
-          break;
-        case '6024':
-          entry.bmi = value;
-          break;
       }
     });
 

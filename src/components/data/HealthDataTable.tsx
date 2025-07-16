@@ -52,8 +52,6 @@ export function HealthDataTable({ data }: HealthDataTableProps) {
                   <TableCell sx={{ fontWeight: 600 }}>日付</TableCell>
                   <TableCell align="center" sx={{ fontWeight: 600 }}>体重</TableCell>
                   <TableCell align="center" sx={{ fontWeight: 600 }}>体脂肪率</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 600 }}>筋肉量</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 600 }}>BMI</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -76,12 +74,6 @@ export function HealthDataTable({ data }: HealthDataTableProps) {
                     </TableCell>
                     <TableCell align="center">
                       {formatValue(item.bodyFat, '%')}
-                    </TableCell>
-                    <TableCell align="center">
-                      {formatValue(item.muscle, 'kg')}
-                    </TableCell>
-                    <TableCell align="center">
-                      {formatValue(item.bmi, '')}
                     </TableCell>
                   </TableRow>
                 ))}

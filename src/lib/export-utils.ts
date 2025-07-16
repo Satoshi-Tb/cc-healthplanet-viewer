@@ -3,7 +3,7 @@ import { ParsedHealthData, ExportData } from '@/types';
 export function convertToCSV(data: ParsedHealthData[]): string {
   if (data.length === 0) return '';
 
-  const headers = ['日付', '体重(kg)', '体脂肪率(%)', '筋肉量(kg)', 'BMI'];
+  const headers = ['日付', '体重(kg)', '体脂肪率(%)'];
   const csvHeaders = headers.join(',');
 
   const csvRows = data.map(item => {
@@ -11,8 +11,6 @@ export function convertToCSV(data: ParsedHealthData[]): string {
       date: item.date.toLocaleDateString('ja-JP'),
       weight: item.weight?.toFixed(1) || '',
       bodyFat: item.bodyFat?.toFixed(1) || '',
-      muscle: item.muscle?.toFixed(1) || '',
-      bmi: item.bmi?.toFixed(1) || '',
     };
     
     return Object.values(row).join(',');

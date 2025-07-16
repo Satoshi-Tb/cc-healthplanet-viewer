@@ -13,15 +13,8 @@ export interface BodyFatData extends HealthData {
   keydata: '6022';
 }
 
-export interface MuscleData extends HealthData {
-  keydata: '6023';
-}
 
-export interface BMIData extends HealthData {
-  keydata: '6024';
-}
-
-export type HealthDataType = WeightData | BodyFatData | MuscleData | BMIData;
+export type HealthDataType = WeightData | BodyFatData;
 
 export interface HealthPlanetResponse {
   birth_date: string;
@@ -34,8 +27,6 @@ export interface ParsedHealthData {
   date: Date;
   weight?: number;
   bodyFat?: number;
-  muscle?: number;
-  bmi?: number;
 }
 
 export type DateRange = 'week' | 'month' | 'year';
@@ -56,6 +47,4 @@ export interface ExportData {
   date: string;
   weight: string;
   bodyFat: string;
-  muscle: string;
-  bmi: string;
 }

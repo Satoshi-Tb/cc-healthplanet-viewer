@@ -6,7 +6,7 @@ import { ParsedHealthData } from '@/types';
 
 interface HealthChartProps {
   data: ParsedHealthData[];
-  dataKey: 'weight' | 'bodyFat' | 'muscle' | 'bmi';
+  dataKey: 'weight' | 'bodyFat';
   title: string;
   unit: string;
   color?: string;

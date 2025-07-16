@@ -31,20 +31,6 @@ export function HealthChartGrid({ data }: HealthChartGridProps) {
         unit="%"
         color="#dc004e"
       />
-      <HealthChart
-        data={data}
-        dataKey="muscle"
-        title="筋肉量"
-        unit="kg"
-        color="#388e3c"
-      />
-      <HealthChart
-        data={data}
-        dataKey="bmi"
-        title="BMI"
-        unit=""
-        color="#f57c00"
-      />
     </Box>
   );
 }
