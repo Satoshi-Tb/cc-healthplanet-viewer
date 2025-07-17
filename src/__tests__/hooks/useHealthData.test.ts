@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useHealthData } from '@/hooks/useHealthData';
-import { ParsedHealthData, DateRangeFilter } from '@/types';
+import { DateRangeFilter } from '@/types';
 
 
 const mockDateRangeFilter: DateRangeFilter = {
@@ -9,22 +9,10 @@ const mockDateRangeFilter: DateRangeFilter = {
   endDate: new Date('2024-03-15'),
 };
 
-const mockHealthData: ParsedHealthData[] = [
-  {
-    date: new Date('2024-03-01'),
-    weight: 70.5,
-    bodyFat: 15.2,
-  },
-  {
-    date: new Date('2024-03-02'),
-    weight: 70.3,
-    bodyFat: 15.1,
-  },
-];
 
 
-describe('useHealthData', () => {
-  it('returns initial state correctly', () => {
+describe('useHealthData フック', () => {
+  it('初期状態を正しく返す', () => {
     const { result } = renderHook(() => useHealthData(mockDateRangeFilter));
 
     expect(result.current.data).toEqual([]);
@@ -33,7 +21,7 @@ describe('useHealthData', () => {
     expect(result.current.mutate).toBeDefined();
   });
 
-  it('handles different date range types', () => {
+  it('異なる日付範囲タイプを処理する', () => {
     const weekRange: DateRangeFilter = {
       type: 'week',
       startDate: new Date('2024-03-01'),
@@ -45,7 +33,7 @@ describe('useHealthData', () => {
     expect(result.current.data).toEqual([]);
   });
 
-  it('provides mutate function for cache revalidation', () => {
+  it('キャッシュ再検証用のmutate関数を提供する', () => {
     const { result } = renderHook(() => useHealthData(mockDateRangeFilter));
     
     expect(typeof result.current.mutate).toBe('function');

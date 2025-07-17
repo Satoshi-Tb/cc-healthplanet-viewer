@@ -48,19 +48,19 @@ Object.defineProperty(HTMLAnchorElement.prototype, 'getAttribute', {
   value: jest.fn(),
 });
 
-describe('export-utils', () => {
+describe('export-utils ユーティリティ', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     document.body.innerHTML = '';
   });
 
-  describe('convertToCSV', () => {
-    it('returns empty string for empty data', () => {
+  describe('convertToCSV 関数', () => {
+    it('空のデータに対して空文字列を返す', () => {
       const result = convertToCSV([]);
       expect(result).toBe('');
     });
 
-    it('converts health data to CSV format with headers', () => {
+    it('ヘルスデータをヘッダー付きCSV形式に変換する', () => {
       const result = convertToCSV(mockHealthData);
       const lines = result.split('\n');
 
@@ -70,7 +70,7 @@ describe('export-utils', () => {
       expect(lines[3]).toBe('2024/3/3,,15.0');
     });
 
-    it('handles missing values correctly', () => {
+    it('欠損値を正しく処理する', () => {
       const dataWithMissingValues: ParsedHealthData[] = [
         {
           date: new Date('2024-03-01'),
@@ -85,7 +85,7 @@ describe('export-utils', () => {
       expect(lines[1]).toBe('2024/3/1,,');
     });
 
-    it('formats numbers to one decimal place', () => {
+    it('数値を小数点以下1桁でフォーマットする', () => {
       const dataWithDecimals: ParsedHealthData[] = [
         {
           date: new Date('2024-03-01'),
@@ -101,8 +101,8 @@ describe('export-utils', () => {
     });
   });
 
-  describe('downloadCSV', () => {
-    it('creates and clicks download link with BOM', () => {
+  describe('downloadCSV 関数', () => {
+    it('BOM付きダウンロードリンクを作成しクリックする', () => {
       const csvContent = 'test,data\n1,2';
       const filename = 'test.csv';
 
@@ -115,12 +115,12 @@ describe('export-utils', () => {
       expect(global.URL.revokeObjectURL).toHaveBeenCalledWith('mock-url');
     });
 
-    it('uses default filename when not provided', () => {
+    it('ファイル名が提供されない場合デフォルトファイル名を使用する', () => {
       downloadCSV('test,data');
       expect(mockClick).toHaveBeenCalled();
     });
 
-    it('adds BOM to CSV content', () => {
+    it('CSVコンテンツにBOMを追加する', () => {
       const csvContent = 'test,data';
       downloadCSV(csvContent);
 
@@ -129,7 +129,7 @@ describe('export-utils', () => {
     });
   });
 
-  describe('exportHealthDataToCSV', () => {
+  describe('exportHealthDataToCSV 関数', () => {
     beforeEach(() => {
       jest.spyOn(Date.prototype, 'toISOString').mockReturnValue('2024-03-15T12:00:00.000Z');
     });
@@ -138,19 +138,19 @@ describe('export-utils', () => {
       (Date.prototype.toISOString as jest.Mock).mockRestore();
     });
 
-    it('exports health data with timestamp in filename', () => {
+    it('ファイル名にタイムスタンプを含めてヘルスデータをエクスポートする', () => {
       exportHealthDataToCSV(mockHealthData);
       expect(mockClick).toHaveBeenCalled();
     });
 
-    it('converts data to CSV and triggers download', () => {
+    it('データをCSVに変換しダウンロードをトリガーする', () => {
       exportHealthDataToCSV(mockHealthData);
 
       expect(global.URL.createObjectURL).toHaveBeenCalled();
       expect(mockClick).toHaveBeenCalled();
     });
 
-    it('handles empty data array', () => {
+    it('空のデータ配列を処理する', () => {
       exportHealthDataToCSV([]);
       expect(mockClick).toHaveBeenCalled();
     });

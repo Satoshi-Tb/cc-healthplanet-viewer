@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDateRange } from '@/hooks/useDateRange';
 
-describe('useDateRange', () => {
+describe('useDateRange フック', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2024-03-15T12:00:00Z'));
@@ -11,21 +11,21 @@ describe('useDateRange', () => {
     jest.useRealTimers();
   });
 
-  it('initializes with month range by default', () => {
+  it('デフォルトで月次範囲で初期化される', () => {
     const { result } = renderHook(() => useDateRange());
 
     expect(result.current.selectedRange).toBe('month');
     expect(result.current.dateRangeFilter.type).toBe('month');
   });
 
-  it('initializes with custom range', () => {
+  it('カスタム範囲で初期化される', () => {
     const { result } = renderHook(() => useDateRange('week'));
 
     expect(result.current.selectedRange).toBe('week');
     expect(result.current.dateRangeFilter.type).toBe('week');
   });
 
-  it('calculates correct date range for week', () => {
+  it('週次の正しい日付範囲を計算する', () => {
     const { result } = renderHook(() => useDateRange('week'));
 
     const { dateRangeFilter } = result.current;
@@ -36,7 +36,7 @@ describe('useDateRange', () => {
     expect(dateRangeFilter.endDate).toEqual(expectedEndDate);
   });
 
-  it('calculates correct date range for month', () => {
+  it('月次の正しい日付範囲を計算する', () => {
     const { result } = renderHook(() => useDateRange('month'));
 
     const { dateRangeFilter } = result.current;
@@ -47,7 +47,7 @@ describe('useDateRange', () => {
     expect(dateRangeFilter.endDate).toEqual(expectedEndDate);
   });
 
-  it('calculates correct date range for year', () => {
+  it('年次の正しい日付範囲を計算する', () => {
     const { result } = renderHook(() => useDateRange('year'));
 
     const { dateRangeFilter } = result.current;
@@ -58,7 +58,7 @@ describe('useDateRange', () => {
     expect(dateRangeFilter.endDate).toEqual(expectedEndDate);
   });
 
-  it('updates selected range when setSelectedRange is called', () => {
+  it('setSelectedRangeが呼ばれたときに選択範囲が更新される', () => {
     const { result } = renderHook(() => useDateRange('month'));
 
     act(() => {
@@ -69,7 +69,7 @@ describe('useDateRange', () => {
     expect(result.current.dateRangeFilter.type).toBe('week');
   });
 
-  it('recalculates date range when range changes', () => {
+  it('範囲が変更されたときに日付範囲が再計算される', () => {
     const { result } = renderHook(() => useDateRange('month'));
 
     act(() => {
@@ -82,8 +82,8 @@ describe('useDateRange', () => {
     expect(dateRangeFilter.startDate).toEqual(expectedStartDate);
   });
 
-  it('defaults to month range for invalid input', () => {
-    const { result } = renderHook(() => useDateRange('invalid' as any));
+  it('無効な入力に対してデフォルトで月次範囲になる', () => {
+    const { result } = renderHook(() => useDateRange('invalid' as 'week' | 'month' | 'year'));
 
     const { dateRangeFilter } = result.current;
     const expectedStartDate = new Date('2024-02-15T12:00:00Z');

@@ -3,7 +3,7 @@ import { HealthData } from '@/types';
 
 global.fetch = jest.fn();
 
-describe('HealthPlanetAPI', () => {
+describe('HealthPlanetAPI クラス', () => {
   let api: HealthPlanetAPI;
 
   beforeEach(() => {
@@ -11,8 +11,8 @@ describe('HealthPlanetAPI', () => {
     (fetch as jest.Mock).mockClear();
   });
 
-  describe('fetchHealthData', () => {
-    it('makes POST request with correct parameters', async () => {
+  describe('fetchHealthData メソッド', () => {
+    it('正しいパラメータでPOSTリクエストを実行する', async () => {
       const mockResponse = {
         ok: true,
         json: jest.fn().mockResolvedValue({ data: [] }),
@@ -36,7 +36,7 @@ describe('HealthPlanetAPI', () => {
       });
     });
 
-    it('makes request without tag parameter when not provided', async () => {
+    it('tagパラメータが提供されない場合、tagなしでリクエストする', async () => {
       const mockResponse = {
         ok: true,
         json: jest.fn().mockResolvedValue({ data: [] }),
@@ -59,7 +59,7 @@ describe('HealthPlanetAPI', () => {
       });
     });
 
-    it('returns health data on success', async () => {
+    it('成功時にヘルスデータを返す', async () => {
       const mockData = [
         { date: '20240301', tag: '6021', keydata: '70.5' },
       ];
@@ -74,7 +74,7 @@ describe('HealthPlanetAPI', () => {
       expect(result).toEqual(mockData);
     });
 
-    it('throws error when response is not ok', async () => {
+    it('レスポンスがOKでない場合エラーをスローする', async () => {
       const mockResponse = {
         ok: false,
         status: 400,
@@ -86,7 +86,7 @@ describe('HealthPlanetAPI', () => {
         .rejects.toThrow('Bad Request');
     });
 
-    it('throws generic error when response json fails', async () => {
+    it('レスポンスJSONパースに失敗した場合一般的なエラーをスローする', async () => {
       const mockResponse = {
         ok: false,
         status: 500,
@@ -99,8 +99,8 @@ describe('HealthPlanetAPI', () => {
     });
   });
 
-  describe('parseHealthData', () => {
-    it('parses weight and body fat data correctly', () => {
+  describe('parseHealthData メソッド', () => {
+    it('体重と体脂肪率データを正しくパースする', () => {
       const rawData: HealthData[] = [
         { date: '20240301', tag: '6021', keydata: '70.5', model: 'test' },
         { date: '20240301', tag: '6022', keydata: '15.2', model: 'test' },
@@ -121,7 +121,7 @@ describe('HealthPlanetAPI', () => {
       });
     });
 
-    it('sorts data by date in ascending order', () => {
+    it('データを日付の昇順でソートする', () => {
       const rawData: HealthData[] = [
         { date: '20240303', tag: '6021', keydata: '69.8', model: 'test' },
         { date: '20240301', tag: '6021', keydata: '70.5', model: 'test' },
@@ -135,7 +135,7 @@ describe('HealthPlanetAPI', () => {
       expect(result[2].date).toEqual(new Date(2024, 2, 3));
     });
 
-    it('groups multiple measurements for the same date', () => {
+    it('同じ日付の複数の測定値をグループ化する', () => {
       const rawData: HealthData[] = [
         { date: '2024030108', tag: '6021', keydata: '70.5', model: 'test' },
         { date: '2024030112', tag: '6022', keydata: '15.2', model: 'test' },
@@ -152,7 +152,7 @@ describe('HealthPlanetAPI', () => {
       });
     });
 
-    it('handles unknown tags by ignoring them', () => {
+    it('未知のtagを無視して処理する', () => {
       const rawData: HealthData[] = [
         { date: '20240301', tag: '6021', keydata: '70.5', model: 'test' },
         { date: '20240301', tag: '9999', keydata: '100', model: 'test' },
@@ -166,26 +166,26 @@ describe('HealthPlanetAPI', () => {
       });
     });
 
-    it('returns empty array for empty input', () => {
+    it('空の入力に対して空の配列を返す', () => {
       const result = api.parseHealthData([]);
       expect(result).toEqual([]);
     });
   });
 
-  describe('formatDateForAPI', () => {
-    it('formats date to YYYYMMDD string', () => {
+  describe('formatDateForAPI メソッド', () => {
+    it('日付をYYYYMMDD文字列にフォーマットする', () => {
       const date = new Date(2024, 2, 15);
       const result = api.formatDateForAPI(date);
       expect(result).toBe('20240315');
     });
 
-    it('pads single digit months and days with zero', () => {
+    it('一桁の月と日をゼロ埋めする', () => {
       const date = new Date(2024, 0, 5);
       const result = api.formatDateForAPI(date);
       expect(result).toBe('20240105');
     });
 
-    it('handles year boundaries correctly', () => {
+    it('年の境界を正しく処理する', () => {
       const date = new Date(2023, 11, 31);
       const result = api.formatDateForAPI(date);
       expect(result).toBe('20231231');

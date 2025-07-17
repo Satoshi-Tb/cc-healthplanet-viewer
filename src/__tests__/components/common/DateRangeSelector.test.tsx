@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DateRangeSelector } from '@/components/common/DateRangeSelector';
 
-describe('DateRangeSelector', () => {
+describe('DateRangeSelector コンポーネント', () => {
   const mockOnRangeChange = jest.fn();
 
   beforeEach(() => {
     mockOnRangeChange.mockClear();
   });
 
-  it('renders all toggle buttons', () => {
+  it('すべてのトグルボタンが表示される', () => {
     render(
       <DateRangeSelector
         selectedRange="month"
@@ -21,7 +21,7 @@ describe('DateRangeSelector', () => {
     expect(screen.getByText('年次')).toBeInTheDocument();
   });
 
-  it('shows selected range as active', () => {
+  it('選択された範囲がアクティブ状態で表示される', () => {
     render(
       <DateRangeSelector
         selectedRange="week"
@@ -33,7 +33,7 @@ describe('DateRangeSelector', () => {
     expect(weekButton).toHaveAttribute('aria-pressed', 'true');
   });
 
-  it('calls onRangeChange when a different range is selected', () => {
+  it('異なる範囲が選択されたときonRangeChangeが呼ばれる', () => {
     render(
       <DateRangeSelector
         selectedRange="month"
@@ -45,7 +45,7 @@ describe('DateRangeSelector', () => {
     expect(mockOnRangeChange).toHaveBeenCalledWith('week');
   });
 
-  it('does not call onRangeChange when the same range is clicked', () => {
+  it('同じ範囲がクリックされてもonRangeChangeは呼ばれない', () => {
     render(
       <DateRangeSelector
         selectedRange="month"
@@ -57,7 +57,7 @@ describe('DateRangeSelector', () => {
     expect(mockOnRangeChange).not.toHaveBeenCalled();
   });
 
-  it('displays the correct title', () => {
+  it('正しいタイトルが表示される', () => {
     render(
       <DateRangeSelector
         selectedRange="month"
