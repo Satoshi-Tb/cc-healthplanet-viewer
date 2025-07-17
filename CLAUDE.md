@@ -182,6 +182,16 @@ NEXT_PUBLIC_APP_ENV=production
 - **DDoS保護**: 標準装備
 - **WAF**: Web Application Firewall
 
+## 開発戦略
+
+### 品質保証
+- **機能追加・修正時の必須チェック**:
+  - タイプチェック (`npm run type-check`)
+  - ビルド (`npm run build`)
+  - 単体テスト (`npm run test`)
+  - E2Eテスト (`npm run test:e2e`)
+- 全てのチェックをパスしてからコミット・デプロイを実行
+
 ## 今後の拡張予定
 - 目標設定機能
 - データ比較機能
