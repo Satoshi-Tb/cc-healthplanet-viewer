@@ -23,6 +23,7 @@ export function HealthChartGrid({ data }: HealthChartGridProps) {
         title="体重"
         unit="kg"
         color="#1976d2"
+        testId="weight-chart"
       />
       <HealthChart
         data={data}
@@ -30,6 +31,7 @@ export function HealthChartGrid({ data }: HealthChartGridProps) {
         title="体脂肪率"
         unit="%"
         color="#dc004e"
+        testId="body-fat-chart"
       />
     </Box>
   );

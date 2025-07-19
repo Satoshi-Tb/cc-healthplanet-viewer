@@ -10,9 +10,10 @@ interface HealthChartProps {
   title: string;
   unit: string;
   color?: string;
+  testId?: string;
 }
 
-export function HealthChart({ data, dataKey, title, unit, color = '#1976d2' }: HealthChartProps) {
+export function HealthChart({ data, dataKey, title, unit, color = '#1976d2', testId }: HealthChartProps) {
   const chartData = data
     .filter(item => item[dataKey] !== undefined)
     .map(item => ({
@@ -46,7 +47,11 @@ export function HealthChart({ data, dataKey, title, unit, color = '#1976d2' }: H
             <Typography variant="body2">データがありません</Typography>
           </Box>
         ) : (
-          <Box sx={{ flex: 1, width: '100%' }}>
+          <Box 
+            sx={{ flex: 1, width: '100%' }}
+            data-testid={testId}
+            aria-label={`${title}チャート`}
+          >
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />

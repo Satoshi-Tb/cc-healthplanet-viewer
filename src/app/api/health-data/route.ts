@@ -55,6 +55,7 @@ async function handleRequest(request: NextRequest) {
     });
 
     if (!response.ok) {
+      console.log("Health Planet API response error:", response)
       throw new Error(`Health Planet API error: ${response.status}`);
     }
 
