@@ -12,12 +12,12 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  // APIのレートリミットの都合、ターゲットブラウザはchromium 1つとする
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
