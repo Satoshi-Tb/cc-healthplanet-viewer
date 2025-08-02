@@ -2,34 +2,34 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Type check
-      run: npm run type-check
+      - name: Type check
+        run: npm run type-check
 
-    - name: Lint
-      run: npm run lint
+      - name: Lint
+        run: npm run lint
 
-    - name: Run unit tests
-      run: npm run test
+      - name: Run unit tests
+        run: npm run test
 
     # E2E tests temporarily disabled
     # - name: Install Playwright Browsers
@@ -44,38 +44,36 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build Next.js app
-      run: npm run build
-      env:
-        HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
-        HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
-        HEALTH_PLANET_ACCESS_TOKEN: ${{ secrets.HEALTH_PLANET_ACCESS_TOKEN }}
-        NEXT_PUBLIC_APP_ENV: production
+      - name: Build Next.js app
+        run: npm run build
+        env:
+          HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
+          HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
+          HEALTH_PLANET_ACCESS_TOKEN: ${{ secrets.HEALTH_PLANET_ACCESS_TOKEN }}
+          NEXT_PUBLIC_APP_ENV: production
 
-    - name: Build with OpenNext
-      run: npx @opennextjs/cloudflare
-      env:
-        HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
-        HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
-        HEALTH_PLANET_ACCESS_TOKEN: ${{ secrets.HEALTH_PLANET_ACCESS_TOKEN }}
-        NEXT_PUBLIC_APP_ENV: production
+      - name: Build with OpenNext
+        run: npx @opennextjs/cloudflare build
+        env:
+          HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
+          HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
+          HEALTH_PLANET_ACCESS_TOKEN: ${{ secrets.HEALTH_PLANET_ACCESS_TOKEN }}
+          NEXT_PUBLIC_APP_ENV: production
 
-    - name: Deploy to Cloudflare Pages
-      uses: cloudflare/pages-action@v1
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        projectName: health-planet-app
-        directory: .vercel/output/static
-        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .vercel/output/static --project-name health-planet-app
