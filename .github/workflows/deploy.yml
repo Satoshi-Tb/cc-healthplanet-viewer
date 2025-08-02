@@ -55,8 +55,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Build
-      run: npm run build
+    - name: Build with OpenNext
+      run: npx @opennextjs/cloudflare
       env:
         HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
         HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
@@ -69,5 +69,5 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: health-planet-app
-        directory: out
+        directory: .vercel/output/static
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
