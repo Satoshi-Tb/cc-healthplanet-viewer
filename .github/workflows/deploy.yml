@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies
@@ -49,11 +49,19 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies
       run: npm ci
+
+    - name: Build Next.js app
+      run: npm run build
+      env:
+        HEALTH_PLANET_CLIENT_ID: ${{ secrets.HEALTH_PLANET_CLIENT_ID }}
+        HEALTH_PLANET_CLIENT_SECRET: ${{ secrets.HEALTH_PLANET_CLIENT_SECRET }}
+        HEALTH_PLANET_ACCESS_TOKEN: ${{ secrets.HEALTH_PLANET_ACCESS_TOKEN }}
+        NEXT_PUBLIC_APP_ENV: production
 
     - name: Build with OpenNext
       run: npx @opennextjs/cloudflare
