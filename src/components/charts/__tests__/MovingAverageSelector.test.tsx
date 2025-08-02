@@ -30,13 +30,13 @@ describe("MovingAverageSelector", () => {
     );
 
     const checkbox5 = screen.getByRole("checkbox", {
-      name: "5日移動平均 ━",
+      name: "5日移動平均",
     });
     const checkbox15 = screen.getByRole("checkbox", {
-      name: "15日移動平均 ━",
+      name: "15日移動平均",
     });
     const checkbox30 = screen.getByRole("checkbox", {
-      name: "30日移動平均 ━",
+      name: "30日移動平均",
     });
 
     expect(checkbox5).toBeChecked();
@@ -48,7 +48,7 @@ describe("MovingAverageSelector", () => {
     render(<MovingAverageSelector selectedDays={[]} onChange={mockOnChange} />);
 
     const checkbox5 = screen.getByRole("checkbox", {
-      name: "5日移動平均 ━",
+      name: "5日移動平均",
     });
     fireEvent.click(checkbox5);
 
@@ -66,7 +66,7 @@ describe("MovingAverageSelector", () => {
     );
 
     const checkbox15 = screen.getByRole("checkbox", {
-      name: "15日移動平均 ━",
+      name: "15日移動平均",
     });
     fireEvent.click(checkbox15);
 
@@ -84,7 +84,7 @@ describe("MovingAverageSelector", () => {
     );
 
     const checkbox15 = screen.getByRole("checkbox", {
-      name: "15日移動平均 ━",
+      name: "15日移動平均",
     });
     fireEvent.click(checkbox15);
 
@@ -106,13 +106,5 @@ describe("MovingAverageSelector", () => {
     expect(screen.getByTestId(`${testId}-5`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-15`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-30`)).toBeInTheDocument();
-  });
-
-  it("should display color chips for each option", () => {
-    render(<MovingAverageSelector selectedDays={[]} onChange={mockOnChange} />);
-
-    // Color chips should be present (represented by the "━" character)
-    const colorChips = screen.getAllByText("━");
-    expect(colorChips).toHaveLength(3); // One for each moving average option
   });
 });

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   FormControl,
   FormLabel,
@@ -9,8 +9,11 @@ import {
   Checkbox,
   Box,
   Chip,
-} from '@mui/material';
-import { MOVING_AVERAGE_OPTIONS, MovingAverageDays } from '@/lib/moving-average';
+} from "@mui/material";
+import {
+  MOVING_AVERAGE_OPTIONS,
+  MovingAverageDays,
+} from "@/lib/moving-average";
 
 interface MovingAverageSelectorProps {
   selectedDays: MovingAverageDays[];
@@ -21,20 +24,23 @@ interface MovingAverageSelectorProps {
 export function MovingAverageSelector({
   selectedDays,
   onChange,
-  testId = 'moving-average-selector',
+  testId = "moving-average-selector",
 }: MovingAverageSelectorProps) {
   const handleChange = (days: MovingAverageDays) => {
     const newSelectedDays = selectedDays.includes(days)
-      ? selectedDays.filter(d => d !== days)
+      ? selectedDays.filter((d) => d !== days)
       : [...selectedDays, days];
-    
+
     onChange(newSelectedDays);
   };
 
   return (
     <Box data-testid={testId}>
       <FormControl component="fieldset" variant="standard">
-        <FormLabel component="legend" sx={{ mb: 1, fontSize: '0.875rem', fontWeight: 500 }}>
+        <FormLabel
+          component="legend"
+          sx={{ mb: 1, fontSize: "0.875rem", fontWeight: 500 }}
+        >
           移動平均線
         </FormLabel>
         <FormGroup row>
@@ -49,28 +55,15 @@ export function MovingAverageSelector({
                   data-testid={`${testId}-${value}`}
                   sx={{
                     color: color,
-                    '&.Mui-checked': {
+                    "&.Mui-checked": {
                       color: color,
                     },
                   }}
                 />
               }
               label={
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                   <span>{label}</span>
-                  <Chip
-                    size="small"
-                    sx={{
-                      backgroundColor: color,
-                      color: 'white',
-                      height: 16,
-                      fontSize: '0.625rem',
-                      '& .MuiChip-label': {
-                        px: 0.5,
-                      },
-                    }}
-                    label="━"
-                  />
                 </Box>
               }
             />
