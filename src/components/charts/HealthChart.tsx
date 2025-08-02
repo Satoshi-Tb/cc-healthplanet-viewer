@@ -3,6 +3,7 @@
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ParsedHealthData } from '@/types';
+import { MovingAverageData, MovingAverageDays, MOVING_AVERAGE_OPTIONS, calculateAllMovingAverages } from '@/lib/moving-average';
 
 interface HealthChartProps {
   data: ParsedHealthData[];
@@ -11,20 +12,35 @@ interface HealthChartProps {
   unit: string;
   color?: string;
   testId?: string;
+  showMovingAverages?: MovingAverageDays[];
 }
 
-export function HealthChart({ data, dataKey, title, unit, color = '#1976d2', testId }: HealthChartProps) {
-  const chartData = data
+export function HealthChart({ data, dataKey, title, unit, color = '#1976d2', testId, showMovingAverages = [] }: HealthChartProps) {
+  const movingAverageData = calculateAllMovingAverages(data, dataKey);
+  
+  const chartData = movingAverageData
     .filter(item => item[dataKey] !== undefined)
     .map(item => ({
       date: item.date.toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' }),
       value: item[dataKey],
       fullDate: item.date.toLocaleDateString('ja-JP'),
+      movingAverage5: item.movingAverage5,
+      movingAverage15: item.movingAverage15,
+      movingAverage30: item.movingAverage30,
     }));
 
   const formatTooltip = (value: number | string, name: string) => {
     if (name === 'value' && typeof value === 'number') {
       return [`${value.toFixed(1)} ${unit}`, title];
+    }
+    if (name === 'movingAverage5' && typeof value === 'number') {
+      return [`${value.toFixed(1)} ${unit}`, '5日移動平均'];
+    }
+    if (name === 'movingAverage15' && typeof value === 'number') {
+      return [`${value.toFixed(1)} ${unit}`, '15日移動平均'];
+    }
+    if (name === 'movingAverage30' && typeof value === 'number') {
+      return [`${value.toFixed(1)} ${unit}`, '30日移動平均'];
     }
     return [value, name];
   };
@@ -88,6 +104,36 @@ export function HealthChart({ data, dataKey, title, unit, color = '#1976d2', tes
                   dot={{ fill: color, strokeWidth: 2, r: 4 }}
                   activeDot={{ r: 6, fill: color }}
                 />
+                {showMovingAverages.includes(5) && (
+                  <Line 
+                    type="monotone" 
+                    dataKey="movingAverage5" 
+                    stroke={MOVING_AVERAGE_OPTIONS[0].color}
+                    strokeWidth={1.5}
+                    dot={false}
+                    strokeDasharray="5 5"
+                  />
+                )}
+                {showMovingAverages.includes(15) && (
+                  <Line 
+                    type="monotone" 
+                    dataKey="movingAverage15" 
+                    stroke={MOVING_AVERAGE_OPTIONS[1].color}
+                    strokeWidth={1.5}
+                    dot={false}
+                    strokeDasharray="5 5"
+                  />
+                )}
+                {showMovingAverages.includes(30) && (
+                  <Line 
+                    type="monotone" 
+                    dataKey="movingAverage30" 
+                    stroke={MOVING_AVERAGE_OPTIONS[2].color}
+                    strokeWidth={1.5}
+                    dot={false}
+                    strokeDasharray="5 5"
+                  />
+                )}
               </LineChart>
             </ResponsiveContainer>
           </Box>
