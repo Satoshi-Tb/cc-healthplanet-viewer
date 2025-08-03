@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MovingAverageSelector } from "../MovingAverageSelector";
+import { MovingAverageSelector } from "../../../components/charts/MovingAverageSelector";
 import { MovingAverageDays } from "@/lib/moving-average";
 
 describe("MovingAverageSelector", () => {

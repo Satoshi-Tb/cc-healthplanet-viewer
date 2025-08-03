@@ -1,7 +1,7 @@
 import {
   calculateMovingAverage,
   calculateAllMovingAverages,
-} from "../moving-average";
+} from "../../lib/moving-average";
 import { ParsedHealthData } from "@/types";
 
 const mockData: ParsedHealthData[] = [
