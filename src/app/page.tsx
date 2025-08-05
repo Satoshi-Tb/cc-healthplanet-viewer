@@ -50,7 +50,12 @@ export default function Home() {
               onRangeChange={setSelectedRange}
             />
           </Box>
-          <ExportButton data={data} disabled={isLoading} />
+          <ExportButton 
+            data={data} 
+            disabled={isLoading}
+            startDate={dateRangeFilter.startDate}
+            endDate={dateRangeFilter.endDate}
+          />
         </Box>
 
         {error && (

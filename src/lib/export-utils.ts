@@ -38,9 +38,19 @@ export function downloadCSV(csvContent: string, filename: string = 'health-data.
   }
 }
 
-export function exportHealthDataToCSV(data: ParsedHealthData[]): void {
+export function exportHealthDataToCSV(data: ParsedHealthData[], startDate?: Date, endDate?: Date): void {
   const csvContent = convertToCSV(data);
-  const timestamp = new Date().toISOString().split('T')[0];
-  const filename = `health-data-${timestamp}.csv`;
+  
+  let filename: string;
+  if (startDate && endDate && data.length > 0) {
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+    const start = formatDate(startDate);
+    const end = formatDate(endDate);
+    filename = `health-data-${start}-${end}.csv`;
+  } else {
+    const timestamp = new Date().toISOString().split('T')[0];
+    filename = `health-data-${timestamp}.csv`;
+  }
+  
   downloadCSV(csvContent, filename);
 }

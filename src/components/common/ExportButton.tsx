@@ -8,12 +8,14 @@ import { ParsedHealthData } from '@/types';
 interface ExportButtonProps {
   data: ParsedHealthData[];
   disabled?: boolean;
+  startDate?: Date;
+  endDate?: Date;
 }
 
-export function ExportButton({ data, disabled = false }: ExportButtonProps) {
+export function ExportButton({ data, disabled = false, startDate, endDate }: ExportButtonProps) {
   const handleExport = () => {
     if (data.length === 0) return;
-    exportHealthDataToCSV(data);
+    exportHealthDataToCSV(data, startDate, endDate);
   };
 
   return (
