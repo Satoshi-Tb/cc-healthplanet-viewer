@@ -3,28 +3,28 @@ import { DateRange, DateRangeFilter } from '@/types';
 
 export function useDateRange(initialRange: DateRange = 'month') {
   const [selectedRange, setSelectedRange] = useState<DateRange>(initialRange);
+  const [baseDate, setBaseDate] = useState<Date>(new Date());
 
   const dateRangeFilter = useMemo((): DateRangeFilter => {
-    const now = new Date();
     let startDate: Date;
-    const endDate = new Date(now);
+    const endDate = new Date(baseDate);
 
     switch (selectedRange) {
       case 'week':
-        startDate = new Date(now);
-        startDate.setDate(now.getDate() - 7);
+        startDate = new Date(baseDate);
+        startDate.setDate(baseDate.getDate() - 7);
         break;
       case 'month':
-        startDate = new Date(now);
-        startDate.setMonth(now.getMonth() - 1);
+        startDate = new Date(baseDate);
+        startDate.setMonth(baseDate.getMonth() - 1);
         break;
       case 'year':
-        startDate = new Date(now);
-        startDate.setFullYear(now.getFullYear() - 1);
+        startDate = new Date(baseDate);
+        startDate.setFullYear(baseDate.getFullYear() - 1);
         break;
       default:
-        startDate = new Date(now);
-        startDate.setMonth(now.getMonth() - 1);
+        startDate = new Date(baseDate);
+        startDate.setMonth(baseDate.getMonth() - 1);
     }
 
     return {
@@ -32,11 +32,13 @@ export function useDateRange(initialRange: DateRange = 'month') {
       startDate,
       endDate,
     };
-  }, [selectedRange]);
+  }, [selectedRange, baseDate]);
 
   return {
     selectedRange,
     setSelectedRange,
+    baseDate,
+    setBaseDate,
     dateRangeFilter,
   };
 }

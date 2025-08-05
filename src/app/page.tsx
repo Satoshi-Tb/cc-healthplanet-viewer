@@ -1,23 +1,29 @@
 'use client';
 
 import { Box, Alert, CircularProgress } from '@mui/material';
-import { Layout, DateRangeSelector, ExportButton } from '@/components/common';
+import { Layout, DateRangeSelector, BaseDateSelector, ExportButton } from '@/components/common';
 import { HealthChartGrid } from '@/components/charts';
 import { HealthDataTable } from '@/components/data';
 import { useHealthData, useDateRange } from '@/hooks';
 
 export default function Home() {
-  const { selectedRange, setSelectedRange, dateRangeFilter } = useDateRange();
+  const { selectedRange, setSelectedRange, baseDate, setBaseDate, dateRangeFilter } = useDateRange();
   const { data, error, isLoading } = useHealthData(dateRangeFilter);
 
   return (
     <Layout>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
-          <DateRangeSelector
-            selectedRange={selectedRange}
-            onRangeChange={setSelectedRange}
-          />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <BaseDateSelector
+              baseDate={baseDate}
+              onDateChange={(date) => date && setBaseDate(date)}
+            />
+            <DateRangeSelector
+              selectedRange={selectedRange}
+              onRangeChange={setSelectedRange}
+            />
+          </Box>
           <ExportButton data={data} disabled={isLoading} />
         </Box>
 
