@@ -34,7 +34,7 @@ export function DateRangeSelector({ selectedRange, onRangeChange }: DateRangeSel
           月次
         </ToggleButton>
         <ToggleButton value="year" sx={{ px: 2 }}>
-          年次
+          3ヵ月
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
