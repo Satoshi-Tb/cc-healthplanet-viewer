@@ -1,15 +1,26 @@
-'use client';
+"use client";
 
-import { ToggleButton, ToggleButtonGroup, Box, Typography } from '@mui/material';
-import { DateRange } from '@/types';
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  Box,
+  Typography,
+} from "@mui/material";
+import { DateRange } from "@/types";
 
 interface DateRangeSelectorProps {
   selectedRange: DateRange;
   onRangeChange: (range: DateRange) => void;
 }
 
-export function DateRangeSelector({ selectedRange, onRangeChange }: DateRangeSelectorProps) {
-  const handleChange = (_: React.MouseEvent<HTMLElement>, value: DateRange | null) => {
+export function DateRangeSelector({
+  selectedRange,
+  onRangeChange,
+}: DateRangeSelectorProps) {
+  const handleChange = (
+    _: React.MouseEvent<HTMLElement>,
+    value: DateRange | null
+  ) => {
     if (value !== null) {
       onRangeChange(value);
     }
@@ -17,7 +28,7 @@ export function DateRangeSelector({ selectedRange, onRangeChange }: DateRangeSel
 
   return (
     <Box sx={{ mb: 3 }}>
-      <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>
+      <Typography variant="subtitle2" sx={{ mb: 1, color: "text.secondary" }}>
         表示期間
       </Typography>
       <ToggleButtonGroup
@@ -34,7 +45,7 @@ export function DateRangeSelector({ selectedRange, onRangeChange }: DateRangeSel
           月次
         </ToggleButton>
         <ToggleButton value="year" sx={{ px: 2 }}>
-          3ヵ月
+          ３ヵ月
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
