@@ -20,7 +20,7 @@ export function useDateRange(initialRange: DateRange = 'month') {
         break;
       case 'year':
         startDate = new Date(baseDate);
-        startDate.setFullYear(baseDate.getFullYear() - 1);
+        startDate.setMonth(baseDate.getMonth() - 3);
         break;
       default:
         startDate = new Date(baseDate);
